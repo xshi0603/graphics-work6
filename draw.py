@@ -18,16 +18,98 @@ def add_box( points, x, y, z, width, height, depth ):
     return
 
 def add_sphere( points, cx, cy, cz, r, step ):
-    pass
+    pointys = generate_sphere(points, cx, cy, cz, r, step);
+    counter = 0;
+    length = len(pointys)
+    while counter < length:
+        
+        x = pointys[counter][0]
+        y = pointys[counter][1]
+        z = pointys[counter][2]
+        
+        add_edge(points, x, y, z, x + 1, y, z)
+        
+        counter += 1
 
 def generate_sphere( points, cx, cy, cz, r, step ):
+    pointys = []
+    x = 0
+    y = 0
+    y = 0
+    theta = 0
+    phi = 0
     
-    pass
+    add_point(pointys, r + cx, cy, cz)
+
+    while theta <= step:
+        
+        while phi <= step:
+            t = float(theta)/step
+            k = float(phi)/step
+
+            x = r * cos(2*math.pi*t) + cx
+            y = r * sin(2*math.pi*t) * cos(2*math.pi*k) + cy
+            z = r * sin(2*math.pi*t) * sin(2*math.pi*k) + cz
+
+            add_point(pointys, x, y, z)
+            
+            phi += 1
+
+        phi = 0
+        theta += 1
+
+        #print_matrix(pointys)
+
+    return pointys
+
 
 def add_torus( points, cx, cy, cz, r0, r1, step ):
+    pointys = generate_torus(points, cx, cy, cz, r0, r1, step);
+    counter = 0;
+    length = len(pointys)
+    while counter < length:
+
+        x = pointys[counter][0]
+        y = pointys[counter][1]
+        z = pointys[counter][2]
+
+        add_edge(points, x, y, z, x + 1, y, z)
+
+        counter += 1
     pass
+
 def generate_torus( points, cx, cy, cz, r0, r1, step ):
-    pass
+    pointys = []
+    x = 0
+    y = 0
+    z = 0
+    theta = 0
+    phi = 0
+
+    add_point(pointys, r0 + r1 + cx, cy, cz)
+    
+    #x = cosphi(rcostheta + R) + cx 
+    #y = rsintheta + cy = y
+    #z = -sinphi(rcostheta + R) + cz 
+
+    while theta <= step:
+
+        while phi <= step:
+            t = float(theta)/step
+            k = float(phi)/step
+
+            x = cos(2*math.pi*k) * (r0 * cos(2*math.pi*t) + r1) + cx
+            y = r0 * sin(2*math.pi*t) + cy
+            z = -sin(2*math.pi*k) * (r0 * cos(2*math.pi*t) + r1)  + cz
+
+            add_point(pointys, x, y, z)
+
+            phi += 1
+
+        phi = 0
+        theta += 1
+
+    return pointys
 
 def add_circle( points, cx, cy, cz, r, step ):
     x0 = r + cx
