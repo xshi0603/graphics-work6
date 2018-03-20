@@ -41,25 +41,24 @@ def generate_sphere( points, cx, cy, cz, r, step ):
     
     add_point(pointys, r + cx, cy, cz)
 
-    while theta <= step:
+    while phi <= step:
         
-        while phi <= step:
+        while theta <= step :
+        
             t = float(theta)/step
             k = float(phi)/step
-
+        
             x = r * cos(2*math.pi*t) + cx
-            y = r * sin(2*math.pi*t) * cos(2*math.pi*k) + cy
-            z = r * sin(2*math.pi*t) * sin(2*math.pi*k) + cz
-
+            y = r * sin(2*math.pi*t) * cos(math.pi*k) + cy
+            z = r * sin(2*math.pi*t) * sin(math.pi*k) + cz
+            
             add_point(pointys, x, y, z)
             
-            phi += 1
+            theta += 1
 
-        phi = 0
-        theta += 1
-
-        #print_matrix(pointys)
-
+        theta = 0
+        phi += 1
+    
     return pointys
 
 
